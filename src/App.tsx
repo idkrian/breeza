@@ -71,28 +71,31 @@ function App() {
       </div>
       <div className="grid grid-cols-3 gap-4">
         {weather && (
-          <div className="flex flex-col border-2">
+          <div className="flex flex-col ">
             <div className="flex justify-center items-center">
               <img
+                className=""
                 src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
-                width={200}
+                width={250}
                 alt=""
               />
-              <p className="text-center text-white font-semibold text-2xl">
+              <p className="text-center text-white font-bold text-4xl">
                 {weather.main.temp}°C
               </p>
             </div>
             <p className="text-center text-white font-semibold text-2xl">
               {weather.weather[0].main}
             </p>
-            <div className="flex justify-around text-white items-center">
+            <div className="flex justify-around text-white items-center mt-5">
               <div className="flex flex-col justify-center items-center">
-                <p>Humidity</p>
-                <p>{weather.main.humidity}</p>
+                <p className="font-extralight text-xl">Humidity</p>
+                <p className=" text-xl">{weather.main.humidity}%</p>
               </div>
               <div className="flex flex-col justify-center items-center">
-                <p>Wind Speed</p>
-                <p>{weather.wind.speed * 3.6} km/h</p>
+                <p className="font-extralight text-xl">Wind Speed</p>
+                <p className=" text-xl">
+                  {Number(weather.wind.speed * 3.6).toFixed(2)} km/h
+                </p>
               </div>
             </div>
           </div>
