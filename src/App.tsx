@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Card from "./molecules/Card";
 interface WeatherProps {
   weather: [
     {
@@ -56,7 +57,6 @@ function App() {
   useEffect(() => {
     getWeather();
   }, []);
-  console.log(weather);
 
   return (
     <div className="bg-darkGray rounded-lg p-8">
@@ -86,21 +86,34 @@ function App() {
             <p className="text-center text-white font-semibold text-2xl">
               {weather.weather[0].main}
             </p>
-            <div className="flex justify-around text-white items-center mt-5">
-              <div className="flex flex-col justify-center items-center">
-                <p className="font-extralight text-xl">Humidity</p>
-                <p className=" text-xl">{weather.main.humidity}%</p>
-              </div>
-              <div className="flex flex-col justify-center items-center">
-                <p className="font-extralight text-xl">Wind Speed</p>
-                <p className=" text-xl">
-                  {Number(weather.wind.speed * 3.6).toFixed(2)} km/h
-                </p>
-              </div>
-            </div>
           </div>
         )}
-        <div className="col-span-2 ">04</div>
+        <div className="col-span-2">
+          {weather && (
+            <div className="grid grid-cols-3 gap-6 grid-rows-3">
+              <Card
+                title={"Wind"}
+                text={Number(weather.wind.speed * 3.6).toFixed(2)}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Humidity"}
+                text={`${weather.main.humidity}%`}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Feels Like"}
+                text={`${weather.main.temp}°C`}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Pressure"}
+                text={`${weather.main.pressure}hPa`}
+                subtitle={"East"}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

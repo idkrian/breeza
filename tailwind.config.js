@@ -6,6 +6,7 @@ export default {
       background: "#0b131e",
       darkGray: "#202b3b",
       white: "#f0f1f1",
+      blue: "#0095ff",
     },
     extend: {},
   },
