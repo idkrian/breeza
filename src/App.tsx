@@ -67,32 +67,36 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-darkGray rounded-lg p-8 flex align-middle justify-center">
+    <div className="bg-darkGray rounded-lg p-8 flex align-middle justify-around">
       <div className="grid grid-cols-3 gap-4">
         {weather && (
           <div className="flex flex-col ">
             <div className="flex justify-center">
-              <p className="text-white text-lg font-semibold">City:</p>
               <input
                 type="text"
                 name=""
                 id=""
-                className="bg-darkGray rounded-lg border-2 border-background ml-4"
+                placeholder="Toronto, Canada"
+                className="bg-darkGray rounded-3xl border-2 border-background ml-4 p-2 w-full"
               />
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
               <img
                 className=""
                 src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
                 width={250}
                 alt=""
               />
-              <p className="text-center text-white font-bold text-4xl">
-                {weather.main.temp}°C
+              <p className="text-center text-white font-bold text-6xl">
+                {Math.trunc(weather.main.temp)}°C
               </p>
             </div>
             <p className="text-center text-white font-semibold text-2xl">
-              {weather.weather[0].main}
+              {weather.weather[0].description}
+            </p>
+            <div className="border my-8" />
+            <p className="text-center text-white font-semibold text-2xl">
+              {weather.name}
             </p>
           </div>
         )}
