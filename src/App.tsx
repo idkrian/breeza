@@ -67,17 +67,17 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-darkGray rounded-lg p-8 flex align-middle justify-around">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="bg-white rounded-lg flex align-middle justify-center w-fit h-fit">
+      <div className="grid grid-cols-3">
         {weather && (
-          <div className="flex flex-col ">
+          <div className="flex flex-col p-4 ">
             <div className="flex justify-center">
               <input
                 type="text"
                 name=""
                 id=""
                 placeholder="Toronto, Canada"
-                className="bg-darkGray rounded-3xl border-2 border-background ml-4 p-2 w-full"
+                className="bg-lightWhite rounded-3xl p-2 px-4 w-full"
               />
             </div>
             <div className="flex flex-col justify-center items-center">
@@ -87,22 +87,22 @@ function App() {
                 width={250}
                 alt=""
               />
-              <p className="text-center text-white font-bold text-6xl">
+              <p className="text-center  font-bold text-6xl">
                 {Math.trunc(weather.main.temp)}°C
               </p>
             </div>
-            <p className="text-center text-white font-semibold text-2xl">
+            <p className="text-center  font-semibold text-2xl">
               {weather.weather[0].description}
             </p>
             <div className="border my-8" />
-            <p className="text-center text-white font-semibold text-2xl">
+            <p className="text-center  font-semibold text-2xl">
               {weather.name}
             </p>
           </div>
         )}
-        <div className="col-span-2">
+        <div className="col-span-2 bg-lightWhite p-4">
           {weather && (
-            <div className="grid grid-cols-3 gap-6 grid-rows-3">
+            <div className="grid grid-cols-3 gap-6 grid-rows-3 ">
               <Card
                 title={"Wind"}
                 text={Number(weather.wind.speed * 3.6).toFixed(2)}
