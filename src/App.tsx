@@ -23,16 +23,12 @@ function App() {
     <div className="bg-white rounded-lg flex align-middle justify-center w-fit h-fit">
       <div className="grid grid-cols-3">
         {weather && (
-          <div className="flex flex-col p-4 ">
-            <div className="flex justify-center">
-              <input
-                type="text"
-                name=""
-                id=""
-                placeholder="Toronto, Canada"
-                className="bg-lightWhite rounded-3xl p-2 px-4 w-10/12	mt-4"
-              />
-            </div>
+          <div className="flex flex-col p-4 items-center">
+            <input
+              type="text"
+              placeholder="Toronto, Canada"
+              className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-11/12"
+            />
             <div className="flex flex-col justify-center items-center">
               <img
                 className=""
@@ -40,20 +36,18 @@ function App() {
                 width={250}
                 alt=""
               />
-              <p className="text-center  font-bold text-6xl">
+              <p className="text-center font-bold text-6xl">
                 {Math.trunc(weather.main.temp)}°C
               </p>
             </div>
             <p className="text-center  font-semibold text-2xl">
               {weather.weather[0].description}
             </p>
-            <div className="border my-8" />
-            <p className="text-center  font-semibold text-2xl">
-              {weather.name}
-            </p>
+            <div className="border border-lightBackground my-8 w-8/12" />
+            <p className="text-center font-semibold text-2xl">{weather.name}</p>
           </div>
         )}
-        <div className="col-span-2 bg-lightWhite p-4">
+        <div className="col-span-2 bg-lightWhite p-4 rounded-lg">
           {weather && (
             <div className="grid grid-cols-3 gap-6 grid-rows-3 ">
               <Card
