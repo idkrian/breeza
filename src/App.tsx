@@ -1,64 +1,17 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Card from "./molecules/Card";
-interface WeatherProps {
-  weather: [
-    {
-      id: number;
-      main: string;
-      description: string;
-      icon: string;
-    }
-  ];
-  base: "stations";
-  main: {
-    temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    pressure: number;
-    humidity: number;
-    sea_level: number;
-    grnd_level: number;
-  };
-  visibility: number;
-  wind: {
-    speed: number;
-    deg: number;
-    gust: number;
-  };
-  rain: {
-    "1h": number;
-  };
-  clouds: {
-    all: number;
-  };
-  dt: number;
-  sys: {
-    type: number;
-    id: number;
-    country: string;
-    sunrise: number;
-    sunset: number;
-  };
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
-}
+import { OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
+import { getOpenMeteo, getOpenWeather } from "./services/api";
+
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
-  const [meteo, setMeteo] = useState();
+  const [meteo, setMeteo] = useState<OpenMeteoProps>();
   const getWeather = async () => {
-    const weatherData = await axios.get(
-      "https://api.openweathermap.org/data/2.5/weather?lat=-15.77&lon=-47.92&units=metric&appid=a84fa02c10f107905f4968c8ec0bea59"
-    );
-    setWeather(weatherData.data);
-    const longitude = weatherData.data.coord.lon;
-    const latitude = weatherData.data.coord.lat;
-    const meteoData = await axios.get(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,,snowfall,cloud_cover,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,wind_speed_10m,wind_direction_10m&daily=sunrise,sunset,sunshine_duration,uv_index_max,precipitation_sum,precipitation_probability_max,rain_sum&timezone=America%2FSao_Paulo&forecast_days=1`
-    );
+    const weatherData = await getOpenWeather();
+    setWeather(weatherData);
+    const longitude = weatherData.coord.lon;
+    const latitude = weatherData.coord.lat;
+    const meteoData = await getOpenMeteo(latitude, longitude);
     console.log(meteoData.data);
     setMeteo(meteoData.data);
   };
@@ -77,7 +30,7 @@ function App() {
                 name=""
                 id=""
                 placeholder="Toronto, Canada"
-                className="bg-lightWhite rounded-3xl p-2 px-4 w-full"
+                className="bg-lightWhite rounded-3xl p-2 px-4 w-10/12	mt-4"
               />
             </div>
             <div className="flex flex-col justify-center items-center">
@@ -127,7 +80,7 @@ function App() {
                 <>
                   <Card
                     title={"UV Index"}
-                    text={meteo.daily.uv_index_max[0]}
+                    text={String(meteo.daily.uv_index_max[0])}
                     subtitle1={"East"}
                   />
                   <Card
