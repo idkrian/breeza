@@ -29,9 +29,9 @@ function App() {
   };
   return (
     <div className="bg-white rounded-lg flex align-middle justify-center w-fit h-fit">
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-2 md:grid-cols-3">
         {weather && (
-          <div className="flex flex-col p-4 items-center">
+          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center">
             <input
               type="text"
               placeholder="Toronto, Canada"
@@ -67,7 +67,7 @@ function App() {
             <img src={Loading} />
           ) : (
             weather && (
-              <div className="grid grid-cols-3 gap-6 grid-rows-3 ">
+              <div className="grid grid-cols-2 gap-6 grid-rows-3 md:grid-cols-3 ">
                 <Card
                   title={"Wind"}
                   text={Number(weather.wind.speed * 3.6).toFixed(2)}

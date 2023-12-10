@@ -3,7 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <div className="bg-lightBackground h-screen w-screen p-8 flex justify-center items-center">
+  <div className="bg-lightBackground md:h-screen md:w-screen max-w-full p-8 flex justify-center items-center">
     <App />
   </div>
 );
