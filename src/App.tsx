@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Card from "./molecules/Card";
 import { OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
 import { getOpenMeteo, getOpenWeather } from "./services/api";
-import Loading from "./assets/loading.svg";
 
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
@@ -27,9 +26,15 @@ function App() {
     month: "long",
     day: "numeric",
   };
+  console.log(loading);
+
   return (
-    <div className="bg-white rounded-lg flex align-middle justify-center w-fit h-fit">
-      <div className="grid grid-cols-2 md:grid-cols-3">
+    <div
+      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit transition-opacity duration-1000 ${
+        loading ? "opacity-0" : "opacity-100 "
+      }`}
+    >
+      <div className={`grid grid-cols-2 md:grid-cols-3 }`}>
         {weather && (
           <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center">
             <input
@@ -63,61 +68,62 @@ function App() {
           </div>
         )}
         <div className="col-span-2 bg-lightWhite p-4 rounded-lg">
-          {loading ? (
-            <img src={Loading} />
-          ) : (
-            weather && (
-              <div className="grid grid-cols-2 gap-6 grid-rows-3 md:grid-cols-3 ">
-                <Card
-                  title={"Wind"}
-                  text={Number(weather.wind.speed * 3.6).toFixed(2)}
-                  subtitle={"East"}
-                />
-                <Card
-                  title={"Humidity"}
-                  text={`${weather.main.humidity}%`}
-                  subtitle={"East"}
-                />
-                <Card
-                  title={"Feels Like"}
-                  text={`${weather.main.temp}°C`}
-                  subtitle={"East"}
-                />
-                <Card
-                  title={"Pressure"}
-                  text={`${weather.main.pressure}hPa`}
-                  subtitle={"East"}
-                />
-                {meteo && (
-                  <>
-                    <Card
-                      title={"UV Index"}
-                      text={String(meteo.daily.uv_index_max[0])}
-                      subtitle={"East"}
-                    />
-                    <Card
-                      title={"Chance of Rain"}
-                      text={`${meteo.daily.precipitation_probability_max[0]}%`}
-                      subtitle={"East"}
-                    />
-                    <Card title={"Snow"} text={`${meteo.current.snowfall}%`} />
-                    <Card
-                      title={"Cloud Cover"}
-                      text={`${meteo.current.cloud_cover}%`}
-                    />
-                    <Card
-                      title={"Sun"}
-                      subtitle={new Date(
-                        meteo.daily.sunrise[0]
-                      ).toLocaleTimeString("en-US")}
-                      subtitle2={new Date(
-                        meteo.daily.sunset[0]
-                      ).toLocaleTimeString("en-US")}
-                    />
-                  </>
-                )}
-              </div>
-            )
+          {weather && (
+            <div
+              className={`grid grid-cols-2 gap-6 grid-rows-3 md:grid-cols-3 
+                
+              
+              `}
+            >
+              <Card
+                title={"Wind"}
+                text={Number(weather.wind.speed * 3.6).toFixed(2)}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Humidity"}
+                text={`${weather.main.humidity}%`}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Feels Like"}
+                text={`${weather.main.temp}°C`}
+                subtitle={"East"}
+              />
+              <Card
+                title={"Pressure"}
+                text={`${weather.main.pressure}hPa`}
+                subtitle={"East"}
+              />
+              {meteo && (
+                <>
+                  <Card
+                    title={"UV Index"}
+                    text={String(meteo.daily.uv_index_max[0])}
+                    subtitle={"East"}
+                  />
+                  <Card
+                    title={"Chance of Rain"}
+                    text={`${meteo.daily.precipitation_probability_max[0]}%`}
+                    subtitle={"East"}
+                  />
+                  <Card title={"Snow"} text={`${meteo.current.snowfall}%`} />
+                  <Card
+                    title={"Cloud Cover"}
+                    text={`${meteo.current.cloud_cover}%`}
+                  />
+                  <Card
+                    title={"Sun"}
+                    subtitle={new Date(
+                      meteo.daily.sunrise[0]
+                    ).toLocaleTimeString("en-US")}
+                    subtitle2={new Date(
+                      meteo.daily.sunset[0]
+                    ).toLocaleTimeString("en-US")}
+                  />
+                </>
+              )}
+            </div>
           )}
         </div>
       </div>
