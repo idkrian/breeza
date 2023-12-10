@@ -58,12 +58,14 @@ function App() {
               {weather.weather[0].description}
             </p>
             <div className="border border-lightBackground my-8 w-8/12" />
-            {/* <p className="text-center font-semibold text-xl">
-              {new Date(meteo?.current?.time).toLocaleDateString(
-                "en-US",
-                options
-              )}
-            </p> */}
+            {meteo && (
+              <p className="text-center font-semibold text-xl">
+                {new Date(meteo.current.time).toLocaleDateString(
+                  "en-US",
+                  options
+                )}
+              </p>
+            )}
             <p className="text-center font-semibold text-3xl">{weather.name}</p>
           </div>
         )}
