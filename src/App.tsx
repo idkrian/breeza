@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
 import Card from "./molecules/Card";
-import { OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
-import { getOpenMeteo, getOpenWeather } from "./services/api";
+import { CityProps, OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
+import {
+  getOpenMeteo,
+  getOpenWeather,
+  getTermOpenWeather,
+} from "./services/api";
 
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
+  const [search, setSearch] = useState("");
+  const [city, setCity] = useState<CityProps[]>();
   const [loading, setLoading] = useState(false);
+  console.log(weather);
+
   const getWeather = async () => {
     setLoading(true);
-    const weatherData = await getOpenWeather();
+    const weatherData = await getOpenWeather(-79.4163, 43.70011);
     setWeather(weatherData);
     const longitude = weatherData.coord.lon;
     const latitude = weatherData.coord.lat;
-    const meteoData = await getOpenMeteo(latitude, longitude);
-    setMeteo(meteoData.data);
+    getDataByCoord(longitude, latitude);
     setLoading(false);
+  };
+  const getDataByCoord = async (lat: number, lon: number) => {
+    const meteoData = await getOpenMeteo(lat, lon);
+    setMeteo(meteoData.data);
+    const weatherData = await getOpenWeather(lat, lon);
+    setWeather(weatherData);
   };
   useEffect(() => {
     getWeather();
@@ -26,13 +39,17 @@ function App() {
     month: "long",
     day: "numeric",
   };
-  console.log(loading);
-
+  const teste = async (text: string) => {
+    const res = await getTermOpenWeather(text);
+    console.log(res);
+    setCity(res.results);
+  };
+  // transition-opacity duration-1000 ${ loading ? "opacity-0" : "opacity-100 "}
   return (
     <div
-      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit transition-opacity duration-1000 ${
-        loading ? "opacity-0" : "opacity-100 "
-      }`}
+      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit 
+       
+       `}
     >
       <div className={`grid grid-cols-2 md:grid-cols-3 }`}>
         {weather && (
@@ -41,7 +58,32 @@ function App() {
               type="text"
               placeholder="Toronto, Canada"
               className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-11/12"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                teste(e.target.value);
+              }}
             />
+
+            {search.length > 2 && city && (
+              <div className="overflow-auto h-48 w-5/6">
+                {city.map((e) => (
+                  <div
+                    onClick={() => {
+                      setSearch("");
+                      getDataByCoord(e.latitude, e.longitude);
+                    }}
+                    className="flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
+                  >
+                    <img
+                      src={`https://flagsapi.com/${e.country_code}/flat/64.png`}
+                    />
+                    <h1 className="font-semibold text-xl pl-3">{e.name}</h1>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="flex flex-col justify-center items-center">
               <img
                 className=""

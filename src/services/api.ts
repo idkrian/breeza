@@ -1,8 +1,21 @@
 import axios from "axios";
-export const getOpenWeather = async () => {
+export const getOpenWeather = async (lat: number, lon: number) => {
   try {
     const res = await axios.get(
-      "https://api.openweathermap.org/data/2.5/weather?lat=-15.77&lon=-47.92&units=metric&appid=a84fa02c10f107905f4968c8ec0bea59"
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=a84fa02c10f107905f4968c8ec0bea59`
+    );
+    return res.data;
+  } catch (error) {
+    return {
+      error: true,
+      data: error,
+    };
+  }
+};
+export const getTermOpenWeather = async (city: string) => {
+  try {
+    const res = await axios.get(
+      `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`
     );
     return res.data;
   } catch (error) {
