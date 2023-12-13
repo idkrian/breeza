@@ -47,13 +47,13 @@ function App() {
   // transition-opacity duration-1000 ${ loading ? "opacity-0" : "opacity-100 "}
   return (
     <div
-      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit 
+      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit
        
        `}
     >
-      <div className={`grid grid-cols-2 md:grid-cols-3 }`}>
+      <div className={`grid grid-cols-2 md:grid-cols-3  }`}>
         {weather && (
-          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center">
+          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center  relative">
             <input
               type="text"
               placeholder="Toronto, Canada"
@@ -64,9 +64,8 @@ function App() {
                 teste(e.target.value);
               }}
             />
-
             {search.length > 2 && city && (
-              <div className="overflow-auto h-48 w-5/6">
+              <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
                 {city.map((e) => (
                   <div
                     onClick={() => {
@@ -84,7 +83,7 @@ function App() {
               </div>
             )}
 
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center ">
               <img
                 className=""
                 src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
