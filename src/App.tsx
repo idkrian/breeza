@@ -6,7 +6,7 @@ import {
   getOpenWeather,
   getTermOpenWeather,
 } from "./services/api";
-
+import { BiSearchAlt } from "react-icons/bi";
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
@@ -53,17 +53,22 @@ function App() {
     >
       <div className={`grid grid-cols-2 md:grid-cols-3  }`}>
         {weather && (
-          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center  relative">
-            <input
-              type="text"
-              placeholder="Toronto, Canada"
-              className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-11/12"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                teste(e.target.value);
-              }}
-            />
+          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
+            <div className="relative w-full">
+              <div className="absolute right-2 top-6">
+                <BiSearchAlt size={25} color={`#0095ff`} />
+              </div>
+              <input
+                type="text"
+                placeholder="Toronto, Canada"
+                className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-full"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  teste(e.target.value);
+                }}
+              />
+            </div>
             {search.length > 2 && city && (
               <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
                 {city.map((e) => (
