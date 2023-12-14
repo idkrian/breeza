@@ -6,14 +6,14 @@ import {
   getOpenWeather,
   getTermOpenWeather,
 } from "./services/api";
-import { BiSearchAlt } from "react-icons/bi";
+import SearchInput from "./molecules/Input";
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
   const [search, setSearch] = useState("");
   const [city, setCity] = useState<CityProps[]>();
+  const [cityName, setCityName] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(weather);
 
   const getWeather = async () => {
     setLoading(true);
@@ -25,10 +25,12 @@ function App() {
     setLoading(false);
   };
   const getDataByCoord = async (lat: number, lon: number) => {
+    setLoading(true);
     const meteoData = await getOpenMeteo(lat, lon);
     setMeteo(meteoData.data);
     const weatherData = await getOpenWeather(lat, lon);
     setWeather(weatherData);
+    setLoading(false);
   };
   useEffect(() => {
     getWeather();
@@ -39,12 +41,15 @@ function App() {
     month: "long",
     day: "numeric",
   };
-  const teste = async (text: string) => {
+  const getCity = async (text: string) => {
     const res = await getTermOpenWeather(text);
-    console.log(res);
     setCity(res.results);
   };
+  if (loading) {
+    return <h1>Carregando</h1>;
+  }
   // transition-opacity duration-1000 ${ loading ? "opacity-0" : "opacity-100 "}
+
   return (
     <div
       className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit
@@ -54,26 +59,17 @@ function App() {
       <div className={`grid grid-cols-2 md:grid-cols-3  }`}>
         {weather && (
           <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
-            <div className="relative w-full">
-              <div className="absolute right-2 top-6">
-                <BiSearchAlt size={25} color={`#0095ff`} />
-              </div>
-              <input
-                type="text"
-                placeholder="Toronto, Canada"
-                className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-full"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  teste(e.target.value);
-                }}
-              />
-            </div>
+            <SearchInput
+              setSearch={setSearch}
+              search={search}
+              getCity={getCity}
+            />
             {search.length > 2 && city && (
               <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
                 {city.map((e) => (
                   <div
                     onClick={() => {
+                      setCityName(e.name);
                       setSearch("");
                       getDataByCoord(e.latitude, e.longitude);
                     }}
@@ -112,7 +108,9 @@ function App() {
                 )}
               </p>
             )}
-            <p className="text-center font-semibold text-3xl">{weather.name}</p>
+            <p className="text-center font-semibold text-3xl">
+              {cityName === "" ? weather.name : cityName}
+            </p>
           </div>
         )}
         <div className="col-span-2 bg-lightWhite p-4 rounded-lg">
