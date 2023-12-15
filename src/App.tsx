@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "./molecules/Card";
 import { CityProps, OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
 import {
   getOpenMeteo,
@@ -7,6 +6,8 @@ import {
   getTermOpenWeather,
 } from "./services/api";
 import SearchInput from "./molecules/Input";
+import Chart from "./templates/Chart";
+import WeatherCards from "./templates/WeatherCards";
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
@@ -14,7 +15,7 @@ function App() {
   const [city, setCity] = useState<CityProps[]>();
   const [cityName, setCityName] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [page, setPage] = useState(0);
   const getWeather = async () => {
     setLoading(true);
     const weatherData = await getOpenWeather(-79.4163, 43.70011);
@@ -113,63 +114,29 @@ function App() {
             </p>
           </div>
         )}
-        <div className="col-span-2 bg-lightWhite p-4 rounded-lg">
-          {weather && (
-            <div
-              className={`grid grid-cols-2 gap-6 grid-rows-3 md:grid-cols-3 
-                
-              
-              `}
+        <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col justify-center align-middle">
+          <div className="flex gap-4">
+            <p
+              onClick={() => setPage(page - 1)}
+              className={`text-xl ${
+                page === 0 ? "font-semibold" : ""
+              } cursor-pointer`}
             >
-              <Card
-                title={"Wind"}
-                text={Number(weather.wind.speed * 3.6).toFixed(2)}
-                subtitle={"East"}
-              />
-              <Card
-                title={"Humidity"}
-                text={`${weather.main.humidity}%`}
-                subtitle={"East"}
-              />
-              <Card
-                title={"Feels Like"}
-                text={`${weather.main.temp}°C`}
-                subtitle={"East"}
-              />
-              <Card
-                title={"Pressure"}
-                text={`${weather.main.pressure}hPa`}
-                subtitle={"East"}
-              />
-              {meteo && (
-                <>
-                  <Card
-                    title={"UV Index"}
-                    text={String(meteo.daily.uv_index_max[0])}
-                    subtitle={"East"}
-                  />
-                  <Card
-                    title={"Chance of Rain"}
-                    text={`${meteo.daily.precipitation_probability_max[0]}%`}
-                    subtitle={"East"}
-                  />
-                  <Card title={"Snow"} text={`${meteo.current.snowfall}%`} />
-                  <Card
-                    title={"Cloud Cover"}
-                    text={`${meteo.current.cloud_cover}%`}
-                  />
-                  <Card
-                    title={"Sun"}
-                    subtitle={new Date(
-                      meteo.daily.sunrise[0]
-                    ).toLocaleTimeString("en-US")}
-                    subtitle2={new Date(
-                      meteo.daily.sunset[0]
-                    ).toLocaleTimeString("en-US")}
-                  />
-                </>
-              )}
-            </div>
+              Cards
+            </p>
+            <p
+              onClick={() => setPage(page + 1)}
+              className={`text-xl ${
+                page === 1 ? "font-semibold" : ""
+              } cursor-pointer`}
+            >
+              Grafico
+            </p>
+          </div>
+          {page === 0 ? (
+            <WeatherCards weather={weather} meteo={meteo} />
+          ) : (
+            <Chart />
           )}
         </div>
       </div>
