@@ -53,91 +53,92 @@ function App() {
 
   return (
     <div
-      className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit
-       
-       `}
+      // className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit `}
+      className={`bg-white rounded-lg flex align-middle justify-center w-4/5 h-3/4`}
     >
-      <div className={`grid grid-cols-2 md:grid-cols-3  }`}>
-        {weather && (
-          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
-            <SearchInput
-              setSearch={setSearch}
-              search={search}
-              getCity={getCity}
-            />
-            {search.length > 2 && city && (
-              <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
-                {city.map((e) => (
-                  <div
-                    onClick={() => {
-                      setCityName(e.name);
-                      setSearch("");
-                      getDataByCoord(e.latitude, e.longitude);
-                    }}
-                    className="flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
-                  >
-                    <img
-                      src={`https://flagsapi.com/${e.country_code}/flat/64.png`}
-                    />
-                    <h1 className="font-semibold text-xl pl-3">{e.name}</h1>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="flex flex-col justify-center items-center ">
-              <img
-                className=""
-                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
-                width={250}
-                alt=""
+      <div className="w-full h-full">
+        <div className={`grid grid-cols-2 md:grid-cols-3 h-full`}>
+          {weather && (
+            <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
+              <SearchInput
+                setSearch={setSearch}
+                search={search}
+                getCity={getCity}
               />
-              <div className="flex">
-                <p className="text-6xl">{Math.trunc(weather.main.temp)} </p>
-                <span className="text-3xl">°C</span>
+              {search.length > 2 && city && (
+                <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
+                  {city.map((e) => (
+                    <div
+                      onClick={() => {
+                        setCityName(e.name);
+                        setSearch("");
+                        getDataByCoord(e.latitude, e.longitude);
+                      }}
+                      className="flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
+                    >
+                      <img
+                        src={`https://flagsapi.com/${e.country_code}/flat/64.png`}
+                      />
+                      <h1 className="font-semibold text-xl pl-3">{e.name}</h1>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex flex-col justify-center items-center ">
+                <img
+                  className=""
+                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
+                  width={250}
+                  alt=""
+                />
+                <div className="flex">
+                  <p className="text-6xl">{Math.trunc(weather.main.temp)} </p>
+                  <span className="text-3xl">°C</span>
+                </div>
               </div>
-            </div>
-            <p className="text-center font-semibold text-2xl capitalize">
-              {weather.weather[0].description}
-            </p>
-            <div className="border border-lightBackground my-8 w-8/12" />
-            {meteo && (
-              <p className="text-center font-semibold text-xl">
-                {new Date(meteo.current.time).toLocaleDateString(
-                  "en-US",
-                  options
-                )}
+              <p className="text-center font-semibold text-2xl capitalize">
+                {weather.weather[0].description}
               </p>
-            )}
-            <p className="text-center font-semibold text-3xl">
-              {cityName === "" ? weather.name : cityName}
-            </p>
-          </div>
-        )}
-        <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col justify-center align-middle">
-          <div className="flex gap-4">
-            <p
-              onClick={() => setPage(page - 1)}
-              className={`text-xl ${
-                page === 0 ? "font-semibold" : ""
-              } cursor-pointer`}
-            >
-              Cards
-            </p>
-            <p
-              onClick={() => setPage(page + 1)}
-              className={`text-xl ${
-                page === 1 ? "font-semibold" : ""
-              } cursor-pointer`}
-            >
-              Grafico
-            </p>
-          </div>
-          {page === 0 ? (
-            <WeatherCards weather={weather} meteo={meteo} />
-          ) : (
-            <Chart />
+              <div className="border border-lightBackground my-8 w-8/12" />
+              {meteo && (
+                <p className="text-center font-semibold text-xl">
+                  {new Date(meteo.current.time).toLocaleDateString(
+                    "en-US",
+                    options
+                  )}
+                </p>
+              )}
+              <p className="text-center font-semibold text-3xl">
+                {cityName === "" ? weather.name : cityName}
+              </p>
+            </div>
           )}
+          <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col ">
+            <div className="flex gap-4 mt-4">
+              <p
+                onClick={() => setPage(page - 1)}
+                className={`text-xl ${
+                  page === 0 ? "font-semibold" : ""
+                } cursor-pointer`}
+              >
+                Cards
+              </p>
+              <p
+                onClick={() => setPage(page + 1)}
+                className={`text-xl ${
+                  page === 1 ? "font-semibold" : ""
+                } cursor-pointer`}
+              >
+                Grafico
+              </p>
+            </div>
+            {page === 0 ? (
+              <WeatherCards weather={weather} meteo={meteo} />
+            ) : (
+              <Chart />
+            )}
+          </div>
         </div>
       </div>
     </div>
