@@ -117,3 +117,8 @@ export interface CityProps {
   country: string;
   admin1: string;
 }
+
+export interface DaysForecastProps {
+  time: string[];
+  temperature_2m_max: number[];
+}

@@ -17,7 +17,7 @@ function App() {
   const [cityName, setCityName] = useState("");
   const [daysForecast, setDaysForecast] = useState();
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState("card");
   const getWeather = async () => {
     setLoading(true);
     const weatherData = await getOpenWeather(-79.4163, 43.70011);
@@ -26,7 +26,7 @@ function App() {
     const latitude = weatherData.coord.lat;
     getDataByCoord(longitude, latitude);
     const daysForecastData = await get7DaysForecast(longitude, latitude);
-    setDaysForecast(daysForecastData);
+    setDaysForecast(daysForecastData.daily);
     setLoading(false);
   };
 
@@ -41,7 +41,8 @@ function App() {
   useEffect(() => {
     getWeather();
   }, []);
-  const options = {
+
+  const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",

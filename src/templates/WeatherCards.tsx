@@ -1,6 +1,10 @@
 import Card from "../molecules/Card";
-
-const WeatherCards = ({ weather, meteo }) => {
+import { OpenMeteoProps, WeatherProps } from "../helpers/interfaces";
+interface Props {
+  weather?: WeatherProps;
+  meteo?: OpenMeteoProps;
+}
+const WeatherCards = ({ weather, meteo }: Props) => {
   return (
     <>
       {weather && (

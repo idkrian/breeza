@@ -7,14 +7,19 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { DaysForecastProps } from "../helpers/interfaces";
 
-const Chart = ({ daysForecast }) => {
-  const options = {
+interface Props {
+  daysForecast?: DaysForecastProps;
+}
+
+const Chart = ({ daysForecast }: Props) => {
+  const options: Intl.DateTimeFormatOptions = {
     month: "numeric",
     day: "numeric",
   };
-  const array = daysForecast.daily;
-  const combinedData = array.time.map((time: string, index: number) => ({
+  const array = daysForecast;
+  const combinedData = array?.time.map((time: string, index: number) => ({
     name: new Date(time).toLocaleDateString("en-US", options),
     temperature: array.temperature_2m_max[index],
   }));
