@@ -17,7 +17,7 @@ function App() {
   const [cityName, setCityName] = useState("");
   const [daysForecast, setDaysForecast] = useState();
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState("");
   const getWeather = async () => {
     setLoading(true);
     const weatherData = await getOpenWeather(-79.4163, 43.70011);
@@ -55,7 +55,13 @@ function App() {
     return <h1>Carregando</h1>;
   }
   // transition-opacity duration-1000 ${ loading ? "opacity-0" : "opacity-100 "}
-
+  const PageDisplay = () => {
+    if (page === "card") {
+      return <WeatherCards weather={weather} meteo={meteo} />;
+    } else if (page === "chart") {
+      return <Chart daysForecast={daysForecast} />;
+    }
+  };
   return (
     <div
       // className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit `}
@@ -122,27 +128,23 @@ function App() {
           <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col ">
             <div className="flex gap-4 mt-4">
               <p
-                onClick={() => setPage(page - 1)}
+                onClick={() => setPage("card")}
                 className={`text-xl ${
-                  page === 0 ? "font-semibold" : ""
+                  page === "card" ? "font-semibold" : ""
                 } cursor-pointer`}
               >
                 Cards
               </p>
               <p
-                onClick={() => setPage(page + 1)}
+                onClick={() => setPage("chart")}
                 className={`text-xl ${
-                  page === 1 ? "font-semibold" : ""
+                  page === "chart" ? "font-semibold" : ""
                 } cursor-pointer`}
               >
                 Grafico
               </p>
             </div>
-            {page === 0 ? (
-              <WeatherCards weather={weather} meteo={meteo} />
-            ) : (
-              <Chart daysForecast={daysForecast} />
-            )}
+            {PageDisplay()}
           </div>
         </div>
       </div>
