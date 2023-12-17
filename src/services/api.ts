@@ -38,3 +38,16 @@ export const getOpenMeteo = async (latitude: number, longitude: number) => {
     };
   }
 };
+export const get7DaysForecast = async (latitude: number, longitude: number) => {
+  try {
+    const res = await axios.get(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max&timezone=America%2FSao_Paulo`
+    );
+    return res.data;
+  } catch (error) {
+    return {
+      error: true,
+      data: error,
+    };
+  }
+};

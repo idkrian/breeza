@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CityProps, OpenMeteoProps, WeatherProps } from "./helpers/interfaces";
 import {
+  get7DaysForecast,
   getOpenMeteo,
   getOpenWeather,
   getTermOpenWeather,
@@ -14,6 +15,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [city, setCity] = useState<CityProps[]>();
   const [cityName, setCityName] = useState("");
+  const [daysForecast, setDaysForecast] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const getWeather = async () => {
@@ -23,8 +25,11 @@ function App() {
     const longitude = weatherData.coord.lon;
     const latitude = weatherData.coord.lat;
     getDataByCoord(longitude, latitude);
+    const daysForecastData = await get7DaysForecast(longitude, latitude);
+    setDaysForecast(daysForecastData);
     setLoading(false);
   };
+
   const getDataByCoord = async (lat: number, lon: number) => {
     setLoading(true);
     const meteoData = await getOpenMeteo(lat, lon);
@@ -136,7 +141,7 @@ function App() {
             {page === 0 ? (
               <WeatherCards weather={weather} meteo={meteo} />
             ) : (
-              <Chart />
+              <Chart daysForecast={daysForecast} />
             )}
           </div>
         </div>
