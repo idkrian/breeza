@@ -10,6 +10,7 @@ import SearchInput from "./molecules/Input";
 import Chart from "./templates/Chart";
 import WeatherCards from "./templates/WeatherCards";
 import Loading from "../src/assets/loading.svg";
+import Autocomplete from "./molecules/Autocomplete";
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
@@ -58,9 +59,6 @@ function App() {
     setCity(res.results);
   };
 
-  if (loading) {
-    return <img src={Loading} alt="" />;
-  }
   const PageDisplay = () => {
     if (page === "card") {
       return <WeatherCards weather={weather} meteo={meteo} />;
@@ -68,6 +66,10 @@ function App() {
       return <Chart daysForecast={daysForecast} />;
     }
   };
+
+  if (loading) {
+    return <img src={Loading} alt="" />;
+  }
   return (
     <div
       className={`bg-white rounded-lg flex align-middle justify-center w-4/5 h-3/4`}
@@ -81,27 +83,13 @@ function App() {
                 search={search}
                 getCity={getCity}
               />
-              {search.length > 2 && city && (
-                <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
-                  {city.map((e) => (
-                    <div
-                      key={e.country_code}
-                      onClick={() => {
-                        setCityName(e.name);
-                        setSearch("");
-                        getDataByCoord(e.latitude, e.longitude);
-                      }}
-                      className="flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
-                    >
-                      <img
-                        src={`https://flagsapi.com/${e.country_code}/flat/64.png`}
-                      />
-                      <h1 className="font-semibold text-xl pl-3">{e.name}</h1>
-                    </div>
-                  ))}
-                </div>
-              )}
-
+              <Autocomplete
+                search={search}
+                setCityName={setCityName}
+                setSearch={setSearch}
+                getDataByCoord={getDataByCoord}
+                city={city}
+              />
               <div className="flex flex-col justify-center items-center ">
                 <img
                   className=""
@@ -136,7 +124,7 @@ function App() {
               <p
                 onClick={() => setPage("card")}
                 className={`text-xl ${
-                  page === "card" ? "font-semibold" : ""
+                  page === "card" ? "font-bold" : ""
                 } cursor-pointer`}
               >
                 Cards
@@ -144,7 +132,7 @@ function App() {
               <p
                 onClick={() => setPage("chart")}
                 className={`text-xl ${
-                  page === "chart" ? "font-semibold" : ""
+                  page === "chart" ? "font-bold" : ""
                 } cursor-pointer`}
               >
                 Chart
