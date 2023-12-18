@@ -9,6 +9,7 @@ import {
 import SearchInput from "./molecules/Input";
 import Chart from "./templates/Chart";
 import WeatherCards from "./templates/WeatherCards";
+import Loading from "../src/assets/loading.svg";
 function App() {
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
@@ -18,6 +19,7 @@ function App() {
   const [daysForecast, setDaysForecast] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState("card");
+
   const getWeather = async () => {
     setLoading(true);
     const weatherData = await getOpenWeather(-79.4163, 43.70011);
@@ -36,6 +38,8 @@ function App() {
     setMeteo(meteoData.data);
     const weatherData = await getOpenWeather(lat, lon);
     setWeather(weatherData);
+    const daysForecastData = await get7DaysForecast(lat, lon);
+    setDaysForecast(daysForecastData.daily);
     setLoading(false);
   };
   useEffect(() => {
@@ -48,14 +52,15 @@ function App() {
     month: "long",
     day: "numeric",
   };
+
   const getCity = async (text: string) => {
     const res = await getTermOpenWeather(text);
     setCity(res.results);
   };
+
   if (loading) {
-    return <h1>Carregando</h1>;
+    return <img src={Loading} alt="" />;
   }
-  // transition-opacity duration-1000 ${ loading ? "opacity-0" : "opacity-100 "}
   const PageDisplay = () => {
     if (page === "card") {
       return <WeatherCards weather={weather} meteo={meteo} />;
@@ -65,7 +70,6 @@ function App() {
   };
   return (
     <div
-      // className={`bg-white rounded-lg flex align-middle justify-center w-fit h-fit `}
       className={`bg-white rounded-lg flex align-middle justify-center w-4/5 h-3/4`}
     >
       <div className="w-full h-full">
@@ -81,6 +85,7 @@ function App() {
                 <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
                   {city.map((e) => (
                     <div
+                      key={e.country_code}
                       onClick={() => {
                         setCityName(e.name);
                         setSearch("");
@@ -142,7 +147,7 @@ function App() {
                   page === "chart" ? "font-semibold" : ""
                 } cursor-pointer`}
               >
-                Grafico
+                Chart
               </p>
             </div>
             {PageDisplay()}

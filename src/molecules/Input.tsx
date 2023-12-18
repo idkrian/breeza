@@ -1,6 +1,12 @@
+import { Dispatch, SetStateAction } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+interface Props {
+  setSearch: Dispatch<SetStateAction<string>>;
+  search: string;
+  getCity: (e: string) => void;
+}
 
-const SearchInput = ({ setSearch, search, getCity }) => {
+const SearchInput = ({ setSearch, search, getCity }: Props) => {
   return (
     <div className="relative w-full">
       <div className="absolute right-2 top-6">
@@ -8,7 +14,7 @@ const SearchInput = ({ setSearch, search, getCity }) => {
       </div>
       <input
         type="text"
-        placeholder="Toronto, Canada"
+        placeholder="Sydney, Australia"
         className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-full"
         value={search}
         onChange={(e) => {
