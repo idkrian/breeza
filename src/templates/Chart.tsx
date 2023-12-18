@@ -25,7 +25,7 @@ const Chart = ({ daysForecast }: Props) => {
   }));
 
   return (
-    <div className="h-full w-full">
+    <div className="h-64 md:h-full md:w-full">
       <ResponsiveContainer>
         <AreaChart
           data={combinedData}

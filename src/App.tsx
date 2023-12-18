@@ -68,7 +68,11 @@ function App() {
   };
 
   if (loading) {
-    return <img src={Loading} alt="" />;
+    return (
+      <div className="h-screen w-screen flex justify-center align-middle">
+        <img src={Loading} className="w-36" />
+      </div>
+    );
   }
   return (
     <div
@@ -119,7 +123,7 @@ function App() {
               </p>
             </div>
           )}
-          <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col ">
+          <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col relative">
             <div className="flex gap-4 mt-4">
               <p
                 onClick={() => setPage("card")}
@@ -135,10 +139,13 @@ function App() {
                   page === "chart" ? "font-bold" : ""
                 } cursor-pointer`}
               >
-                Chart
+                Week Chart
               </p>
             </div>
             {PageDisplay()}
+            <p className="font-semibold absolute pt-8 bottom-0 text-xs">
+              Made by <span className="text-blue">Rian</span>
+            </p>
           </div>
         </div>
       </div>
