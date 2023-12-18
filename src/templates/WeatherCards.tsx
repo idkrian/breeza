@@ -12,34 +12,19 @@ const WeatherCards = ({ weather, meteo }: Props) => {
           <Card
             title={"Wind"}
             text={Number(weather.wind.speed * 3.6).toFixed(2)}
-            subtitle={"East"}
           />
-          <Card
-            title={"Humidity"}
-            text={`${weather.main.humidity}%`}
-            subtitle={"East"}
-          />
-          <Card
-            title={"Feels Like"}
-            text={`${weather.main.temp}°C`}
-            subtitle={"East"}
-          />
-          <Card
-            title={"Pressure"}
-            text={`${weather.main.pressure}hPa`}
-            subtitle={"East"}
-          />
+          <Card title={"Humidity"} text={`${weather.main.humidity}%`} />
+          <Card title={"Feels Like"} text={`${weather.main.temp}°C`} />
+          <Card title={"Pressure"} text={`${weather.main.pressure}hPa`} />
           {meteo && (
             <>
               <Card
                 title={"UV Index"}
                 text={String(meteo.daily.uv_index_max[0])}
-                subtitle={"East"}
               />
               <Card
                 title={"Chance of Rain"}
                 text={`${meteo.daily.precipitation_probability_max[0]}%`}
-                subtitle={"East"}
               />
               <Card title={"Snow"} text={`${meteo.current.snowfall}%`} />
               <Card
