@@ -20,9 +20,13 @@ function App() {
   const [daysForecast, setDaysForecast] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState("card");
-
+  const loadImage = () => {
+    const img = new Image();
+    img.src = `https://openweathermap.org/img/wn/${weather?.weather[0].icon}@4x.png`;
+  };
   const getWeather = async () => {
     setLoading(true);
+    loadImage();
     const weatherData = await getOpenWeather(-79.4163, 43.70011);
     setWeather(weatherData);
     const longitude = weatherData.coord.lon;
@@ -99,7 +103,6 @@ function App() {
                   className=""
                   src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
                   width={250}
-                  alt=""
                 />
                 <div className="flex">
                   <p className="text-6xl">{Math.trunc(weather.main.temp)} </p>
