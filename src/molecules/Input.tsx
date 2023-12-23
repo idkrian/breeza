@@ -40,7 +40,6 @@ const SearchInput = ({
           }}
         />
         {search.length > 2 && city && (
-          // <div className="overflow-auto bg-white mt-16 h-40 w-5/6 absolute rounded-xl">
           <div className="overflow-auto bg-white mt-2 h-40 w-full absolute rounded-xl">
             {city.map((e) => (
               <div
