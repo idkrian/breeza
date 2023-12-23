@@ -15,7 +15,11 @@ const Home = ({ setIsHome, setCoordinates, setCityName }: Props) => {
 
   const getCity = async (text: string) => {
     const res = await getTermOpenWeather(text);
-    setCity(res.results);
+    const arrayFiltrado = res?.results?.filter(
+      (obj: { country: string }, index: number, arr: CityProps[]) =>
+        arr.findIndex((o) => o.country === obj.country) === index
+    );
+    setCity(arrayFiltrado);
   };
 
   return (
