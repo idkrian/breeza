@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import SearchInput from "../molecules/Input";
 import {
   CityProps,
@@ -18,8 +18,10 @@ import Loading from "../assets/loading.svg";
 
 interface Props {
   coordinates: CoordinateProps;
+  setCityName?: Dispatch<SetStateAction<string>>;
+  cityName: string;
 }
-const Weather = ({ coordinates }: Props) => {
+const Weather = ({ coordinates, setCityName, cityName }: Props) => {
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
@@ -28,7 +30,6 @@ const Weather = ({ coordinates }: Props) => {
   };
   const [page, setPage] = useState("card");
   const [city, setCity] = useState<CityProps[]>();
-  const [cityName, setCityName] = useState("");
   const [weather, setWeather] = useState<WeatherProps>();
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
   const [search, setSearch] = useState("");
@@ -63,7 +64,7 @@ const Weather = ({ coordinates }: Props) => {
   };
   if (loading) {
     return (
-      <div className="h-screen w-screen flex justify-center align-middle">
+      <div className="flex justify-center align-middle">
         <img src={Loading} className="w-36" />
       </div>
     );

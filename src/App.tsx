@@ -9,11 +9,25 @@ function App() {
     lat: 0,
     lon: 0,
   });
+  const [cityName, setCityName] = useState("");
+
   const PageDisplay = () => {
     if (isHome) {
-      return <Home setIsHome={setIsHome} setCoordinates={setCoordinates} />;
+      return (
+        <Home
+          setIsHome={setIsHome}
+          setCoordinates={setCoordinates}
+          setCityName={setCityName}
+        />
+      );
     } else if (!isHome) {
-      return <Weather coordinates={coordinates} />;
+      return (
+        <Weather
+          coordinates={coordinates}
+          setCityName={setCityName}
+          cityName={cityName}
+        />
+      );
     }
   };
   return (

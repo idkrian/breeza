@@ -7,8 +7,9 @@ import { CityProps, CoordinateProps } from "../helpers/interfaces";
 interface Props {
   setIsHome?: Dispatch<SetStateAction<boolean>>;
   setCoordinates?: Dispatch<SetStateAction<CoordinateProps>>;
+  setCityName?: Dispatch<SetStateAction<string>>;
 }
-const Home = ({ setIsHome, setCoordinates }: Props) => {
+const Home = ({ setIsHome, setCoordinates, setCityName }: Props) => {
   const [city, setCity] = useState<CityProps[]>();
   const [search, setSearch] = useState("");
 
@@ -31,6 +32,7 @@ const Home = ({ setIsHome, setCoordinates }: Props) => {
           city={city}
           setIsHome={setIsHome}
           setCoordinates={setCoordinates}
+          setCityName={setCityName}
         />
       </div>
     </div>
