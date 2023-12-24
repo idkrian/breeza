@@ -53,7 +53,11 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
 
   const getCity = async (text: string) => {
     const res = await getTermOpenWeather(text);
-    setCity(res.results);
+    const filteredCities = res?.results?.filter(
+      (obj: { country: string }, index: number, arr: CityProps[]) =>
+        arr.findIndex((o) => o.country === obj.country) === index
+    );
+    setCity(filteredCities);
   };
   const PageDisplay = () => {
     if (page === "card") {
@@ -89,32 +93,34 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
                 width={250}
               />
               <div className="flex">
-                <p className="text-6xl">{Math.trunc(weather.main.temp)} </p>
-                <span className="text-3xl">°C</span>
+                <p className="text-6xl dark:text-white">
+                  {Math.trunc(weather.main.temp)}{" "}
+                </p>
+                <span className="text-3xl dark:text-white">°C</span>
               </div>
             </div>
-            <p className="text-center font-semibold text-2xl capitalize">
+            <p className="text-center font-semibold text-2xl capitalize dark:text-white">
               {weather.weather[0].description}
             </p>
             <div className="border border-lightBackground my-8 w-8/12" />
             {meteo && (
-              <p className="text-center font-semibold text-xl">
+              <p className="text-center font-semibold text-xl dark:text-white">
                 {new Date(meteo.current.time).toLocaleDateString(
                   "en-US",
                   options
                 )}
               </p>
             )}
-            <p className="text-center font-semibold text-3xl">
+            <p className="text-center font-semibold text-3xl dark:text-white">
               {cityName === "" ? weather.name : cityName}
             </p>
           </div>
         )}
-        <div className="col-span-2 bg-lightWhite p-4 rounded-lg flex flex-col relative">
+        <div className="col-span-2 bg-lightWhite dark:bg-[#2c3b51] p-4 rounded-lg flex flex-col relative">
           <div className="flex gap-4 mt-4">
             <p
               onClick={() => setPage("card")}
-              className={`text-xl ${
+              className={`text-xl dark:text-white ${
                 page === "card" ? "font-bold" : ""
               } cursor-pointer`}
             >
@@ -122,7 +128,7 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
             </p>
             <p
               onClick={() => setPage("chart")}
-              className={`text-xl ${
+              className={`text-xl dark:text-white ${
                 page === "chart" ? "font-bold" : ""
               } cursor-pointer`}
             >
@@ -130,7 +136,7 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
             </p>
           </div>
           {PageDisplay()}
-          <p className="font-semibold absolute pt-8 bottom-0 text-xs">
+          <p className="font-semibold absolute pt-8 bottom-0 text-xs dark:text-white">
             Made by <span className="text-blue">Rian</span>
           </p>
         </div>

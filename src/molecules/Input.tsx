@@ -32,7 +32,7 @@ const SearchInput = ({
         <input
           type="text"
           placeholder="Sydney"
-          className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-full"
+          className="bg-lightWhite rounded-3xl p-2 px-4 mt-4 w-full dark:bg-[#2c3b51] dark:text-white"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -40,7 +40,7 @@ const SearchInput = ({
           }}
         />
         {search.length > 2 && city && (
-          <div className="overflow-auto bg-white mt-2 h-40 w-full absolute rounded-xl">
+          <div className="overflow-auto bg-white dark:bg-[#2c3b51] mt-2 max-h-64 w-full absolute rounded-xl">
             {city.map((e) => (
               <div
                 key={e.id}
@@ -54,12 +54,14 @@ const SearchInput = ({
                   });
                   setIsHome?.(false);
                 }}
-                className="flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
+                className="px-4 flex cursor-pointer align-middle items-center hover:bg-lightBackground rounded-lg"
               >
                 <img
                   src={`https://flagsapi.com/${e.country_code}/flat/64.png`}
                 />
-                <h1 className="font-semibold text-xl pl-3">{e.name}</h1>
+                <h1 className="font-semibold text-xl pl-3 dark:text-white">
+                  {e.name}
+                </h1>
               </div>
             ))}
           </div>

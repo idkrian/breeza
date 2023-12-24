@@ -2,6 +2,7 @@ import { useState } from "react";
 import Weather from "./pages/Weather";
 import Home from "./pages/Home";
 import { CoordinateProps } from "./helpers/interfaces";
+import Switcher from "./organisms/Switcher";
 
 function App() {
   const [isHome, setIsHome] = useState(true);
@@ -32,8 +33,9 @@ function App() {
   };
   return (
     <div
-      className={`bg-white rounded-lg flex align-middle justify-center w-4/5 h-3/4`}
+      className={`bg-white dark:bg-darkGray rounded-lg flex align-middle w-4/5 h-3/4 relative`}
     >
+      <Switcher />
       {PageDisplay()}
     </div>
   );

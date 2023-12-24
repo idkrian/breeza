@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
@@ -10,7 +11,11 @@ export default {
       lightWhite: "#efefef",
       white: "#ffffff",
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        "3xl": "0px 3px 8px rgba(0, 0, 0, 0.24)",
+      },
+    },
   },
   plugins: [],
 };

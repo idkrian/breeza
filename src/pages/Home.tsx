@@ -15,11 +15,11 @@ const Home = ({ setIsHome, setCoordinates, setCityName }: Props) => {
 
   const getCity = async (text: string) => {
     const res = await getTermOpenWeather(text);
-    const arrayFiltrado = res?.results?.filter(
+    const filteredCities = res?.results?.filter(
       (obj: { country: string }, index: number, arr: CityProps[]) =>
         arr.findIndex((o) => o.country === obj.country) === index
     );
-    setCity(arrayFiltrado);
+    setCity(filteredCities);
   };
 
   return (
@@ -28,7 +28,9 @@ const Home = ({ setIsHome, setCoordinates, setCityName }: Props) => {
         <img src={Logo} className="w-72" />
       </div>
       <div>
-        <h1 className="text-6xl font-semibold font-poppins">Breeze</h1>
+        <h1 className="text-6xl font-semibold font-poppins dark:text-white">
+          Breeze
+        </h1>
         <SearchInput
           setSearch={setSearch}
           search={search}
