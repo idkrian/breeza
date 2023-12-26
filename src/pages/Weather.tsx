@@ -34,7 +34,7 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
   const [meteo, setMeteo] = useState<OpenMeteoProps>();
   const [search, setSearch] = useState("");
   const [daysForecast, setDaysForecast] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getDataByCoord = async (lat: number, lon: number) => {
     setLoading(true);
@@ -66,83 +66,85 @@ const Weather = ({ coordinates, setCityName, cityName }: Props) => {
       return <Chart daysForecast={daysForecast} />;
     }
   };
+
   if (loading) {
     return (
-      <div className="flex justify-center align-middle">
+      <div className="flex justify-center align-middle w-full h-full">
         <img src={Loading} className="w-36" />
       </div>
     );
-  }
-  return (
-    <div className="w-full h-full">
-      <div className={`grid grid-cols-2 md:grid-cols-3 h-full`}>
-        {weather && (
-          <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
-            <SearchInput
-              setSearch={setSearch}
-              search={search}
-              getCity={getCity}
-              setCityName={setCityName}
-              getDataByCoord={getDataByCoord}
-              city={city}
-            />
-            <div className="flex flex-col justify-center items-center ">
-              <img
-                className=""
-                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
-                width={250}
+  } else {
+    return (
+      <div className="w-full h-full">
+        <div className={`grid grid-cols-2 md:grid-cols-3 h-full`}>
+          {weather && (
+            <div className="flex flex-col p-4 col-span-2 md:col-span-1 items-center relative">
+              <SearchInput
+                setSearch={setSearch}
+                search={search}
+                getCity={getCity}
+                setCityName={setCityName}
+                getDataByCoord={getDataByCoord}
+                city={city}
               />
-              <div className="flex">
-                <p className="text-6xl dark:text-white">
-                  {Math.trunc(weather.main.temp)}{" "}
-                </p>
-                <span className="text-3xl dark:text-white">°C</span>
+              <div className="flex flex-col justify-center items-center ">
+                <img
+                  className=""
+                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
+                  width={250}
+                />
+                <div className="flex">
+                  <p className="text-6xl dark:text-white">
+                    {Math.trunc(weather.main.temp)}{" "}
+                  </p>
+                  <span className="text-3xl dark:text-white">°C</span>
+                </div>
               </div>
-            </div>
-            <p className="text-center font-semibold text-2xl capitalize dark:text-white">
-              {weather.weather[0].description}
-            </p>
-            <div className="border border-lightBackground my-8 w-8/12" />
-            {meteo && (
-              <p className="text-center font-semibold text-xl dark:text-white">
-                {new Date(meteo.current.time).toLocaleDateString(
-                  "en-US",
-                  options
-                )}
+              <p className="text-center font-semibold text-2xl capitalize dark:text-white">
+                {weather.weather[0].description}
               </p>
-            )}
-            <p className="text-center font-semibold text-3xl dark:text-white">
-              {cityName === "" ? weather.name : cityName}
+              <div className="border border-lightBackground my-8 w-8/12" />
+              {meteo && (
+                <p className="text-center font-semibold text-xl dark:text-white">
+                  {new Date(meteo.current.time).toLocaleDateString(
+                    "en-US",
+                    options
+                  )}
+                </p>
+              )}
+              <p className="text-center font-semibold text-3xl dark:text-white">
+                {cityName === "" ? weather.name : cityName}
+              </p>
+            </div>
+          )}
+          <div className="col-span-2 bg-lightWhite dark:bg-[#2c3b51] p-4 rounded-lg flex flex-col relative">
+            <div className="flex gap-4 mt-4">
+              <p
+                onClick={() => setPage("card")}
+                className={`text-xl dark:text-white ${
+                  page === "card" ? "font-bold" : ""
+                } cursor-pointer`}
+              >
+                Cards
+              </p>
+              <p
+                onClick={() => setPage("chart")}
+                className={`text-xl dark:text-white ${
+                  page === "chart" ? "font-bold" : ""
+                } cursor-pointer`}
+              >
+                Week Chart
+              </p>
+            </div>
+            {PageDisplay()}
+            <p className="font-semibold absolute pt-8 bottom-0 text-xs dark:text-white">
+              Made by <span className="text-blue">Rian</span>
             </p>
           </div>
-        )}
-        <div className="col-span-2 bg-lightWhite dark:bg-[#2c3b51] p-4 rounded-lg flex flex-col relative">
-          <div className="flex gap-4 mt-4">
-            <p
-              onClick={() => setPage("card")}
-              className={`text-xl dark:text-white ${
-                page === "card" ? "font-bold" : ""
-              } cursor-pointer`}
-            >
-              Cards
-            </p>
-            <p
-              onClick={() => setPage("chart")}
-              className={`text-xl dark:text-white ${
-                page === "chart" ? "font-bold" : ""
-              } cursor-pointer`}
-            >
-              Week Chart
-            </p>
-          </div>
-          {PageDisplay()}
-          <p className="font-semibold absolute pt-8 bottom-0 text-xs dark:text-white">
-            Made by <span className="text-blue">Rian</span>
-          </p>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Weather;
