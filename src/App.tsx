@@ -33,7 +33,7 @@ function App() {
   };
   return (
     <div
-      className={`bg-white dark:bg-darkGray rounded-lg flex align-middle w-4/5 h-3/4 relative`}
+      className={`bg-white dark:bg-darkGray rounded-2xl flex align-middle w-4/5 h-3/4 relative`}
     >
       <Switcher />
       {PageDisplay()}

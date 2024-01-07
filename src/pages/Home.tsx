@@ -23,12 +23,12 @@ const Home = ({ setIsHome, setCoordinates, setCityName }: Props) => {
   };
 
   return (
-    <div className="flex w-full justify-around align-middle items-center">
+    <div className="flex flex-col md:flex-row w-full justify-around align-middle items-center">
       <div>
-        <img src={Logo} className="w-72" />
+        <img src={Logo} className="w-40 md:w-72" />
       </div>
       <div>
-        <h1 className="text-6xl font-semibold font-poppins dark:text-white">
+        <h1 className="text-6xl font-semibold font-poppins dark:text-white ">
           Breeze
         </h1>
         <SearchInput
